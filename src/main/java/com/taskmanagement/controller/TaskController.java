@@ -21,7 +21,7 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public Tasks getTask(@PathVariable Long id){
         return taskService.getTaskbyId(id);
     }
@@ -31,12 +31,12 @@ public class TaskController {
         return taskService.createTask(tasks);
     }
 
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public Tasks updateTask(@PathVariable Long id, @RequestBody Tasks tasks){
         return taskService.updateTask(id,tasks);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
     }
