@@ -1,43 +1,41 @@
 package com.taskmanagement.service;
 
+import com.taskmanagement.entity.Project;
 import com.taskmanagement.entity.User;
-import com.taskmanagement.repository.UserRepositories;
+import com.taskmanagement.repository.Projectrepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProjectServiceImpl implements UserService{
+public class ProjectServiceImpl implements ProjectService{
 
-    private UserRepositories userRepositories;
+    private Projectrepository projectrepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepositories.findAll();
+    public List<Project> getAllProject() {
+        return projectrepository.findAll();
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepositories.findById(id).orElseThrow(()->new RuntimeException("User is not present"));
+    public Project getProjectById(Long id) {
+        return projectrepository.findById(id).orElseThrow(()->new RuntimeException("Project not found"));
+    }
+    @Override
+    public Project createProject(Project project) {
+        return projectrepository.save(project);
     }
 
     @Override
-    public User createUser(User user) {
-        return userRepositories.save(user);
+    public Project updateProject(Long id, Project project) {
+        Project exists=getProjectById(id);
+        exists.setProjectName(project.getProjectName());
+        exists.setProjectDescription(project.getProjectDescription());
+        return projectrepository.save(exists);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        User exists=getUserById(id);
-        exists.setUsername(user.getUsername());
-        exists.setPassword(user.getPassword());
-        exists.setRoles(user.getRoles());
-        exists.setFullName(user.getFullName());
-        return userRepositories.save(exists);
-    }
-
-    @Override
-    public void deleteUser(Long id) {
-        userRepositories.deleteById(id);
+    public void deleteProject(Long id) {
+        projectrepository.deleteById(id);
     }
 }
